@@ -1,0 +1,45 @@
+    //target
+    public Transform LookAtPlayer;
+    
+    //camera
+    private Transform CamTransform;
+   
+    //camera to target distance
+    private float distance = 3f;
+    
+    //mouse change nums
+    private float currentX = 0f;
+    private float currentY = 0f;
+    
+    //Clamp Rotaion for X
+    public float MaxXrotation = 80f;
+    public float MinXrotation = -25f;
+    
+    
+    
+    private void Start()
+    {
+        CamTransform = GetComponent<Transform>();
+    }
+
+    private void LateUpdate()
+    {    
+        if (Input.GetMouseButton(1))
+        {
+            currentX += Input.GetAxis("Mouse X");
+            currentY += Input.GetAxis("Mouse Y");
+
+            //clamp rotation for x
+            currentY = Mathf.Clamp(currentY, MinYrotation, MaxYrotation);
+        }
+            Vector3 dis = new Vector3(0, 0, -distance);
+            
+            //New rotation from euler mouseX mouseY
+            Quaternion rotation = Quaternion.Euler(currentY, currentX, 0);
+            
+            //Change camera pos through target postion add rotation*distance
+            CamTransform.position = LookAtPlayer.position + rotation * dis;
+            
+            //Change camera rotation to lookAt target
+            CamTransform.LookAt(LookAtPlayer.position);
+    }
