@@ -1,0 +1,14 @@
+
+
+        //use ray from player to camera ,if wall is mask player,this 
+        ray will hit wall,and change camera postion to hit point.
+        
+        //camera to player dir
+        Vector3 newdir = (transform.position-target.position);
+        RaycastHit _hit;
+        if(Physics.Raycast(target.position,newdir,out _hit))
+        {            
+            if (_hit.collider.tag != "MainCamera")
+                transform.position = _hit.point;           
+        }
+        
